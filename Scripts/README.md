@@ -55,3 +55,15 @@
 |`echo "cap.release()" >> p.py`                                                |                                                                                                                |
 |`echo "cv2.destroyAllWindows()" >> p.py`                                      |                                                                                                                |
 
+## Configure Ethernet static
+|          Command                                             | Description                                                                                         |
+|            ---                                               | ---                                                                                                 |
+|`echo 'auto lo' >> /etc/network/interfaces`                   | In order to configure Ethernet in static mode we add the following commands to the"interfaces" file |
+|`echo 'iface lo inet loopback' >> /etc/network/interfaces`    | The loopback network interface                                                                      |
+|`echo '' >> /etc/network/interfaces`                          |                                                                                                     |
+|`echo 'auto eth0' >> /etc/network/interfaces`                 | And the primary network interface                                                                   |
+|`echo 'iface eth0 inet static' >> /etc/network/interfaces`    |                                                                                                     |
+|`echo '    address 10.1.2.175' >> /etc/network/interfaces`    | Introduce the address to which we want to connect                                                   |
+|`echo '    netmask 255.255.255.0' >> /etc/network/interfaces` | Introduce the netmask to which we want to connect                                                   |
+|`echo '    gateway 10.1.2.1' >> /etc/network/interfaces`      | Introduce the gateway to which we want to connect                                                   |
+|`sudo /etc/init.d/networking restart`                         | Finally we do a restart to apply the changes                                                        |
