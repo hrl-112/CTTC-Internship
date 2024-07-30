@@ -5,5 +5,5 @@
 ![CameraPython](Camera_Python.mp4)
 
 ## Setup in order to use Ultra96-V2
-### From bottom to top we can find on the right the Micro SD card, the black Mini DisplayPort - DisplayPort cable connected to the monitor, the grey USB cable used to connect Ethernet (using an adapter USB - Ethernet) & another grey cable to use the USB camera. On the left side there is the Pod with its Mini USB - USB cable and finally it will be the cable of the power supply connected to circular connector, but in this case was disconnected.
+### From bottom to top we can find on the right the Micro SD card, the black Mini DisplayPort - DisplayPort cable connected to the monitor, the grey USB cable used to connect Ethernet (using an adapter USB - Ethernet) & another grey cable to use the USB camera. On the left side there is the Pod with its Mini USB - USB cable connecting the Pod with the PC and finally it will be the cable of the power supply connected to circular connector, but in this case was disconnected.
 <img src="Ultra96V2-Setup.jpg" width="650" height="650">
