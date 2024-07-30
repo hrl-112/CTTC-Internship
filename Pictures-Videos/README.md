@@ -2,4 +2,4 @@
 ## Datecode of Ultra96V2 (in our case 2317)(which means 17th week of 2023)
 <img src="Datecode.jpg" width="650" height="650">
 
-![Camera_Python](Camera_Python.mp4)
+![CameraPython](Camera_Python.mp4)
