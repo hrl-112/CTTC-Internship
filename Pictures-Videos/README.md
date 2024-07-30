@@ -3,3 +3,8 @@
 <img src="Datecode.jpg" width="650" height="650">
 
 ![CameraPython](Camera_Python.mp4)
+
+<video width="600" controls>
+  <source src="Camera_Python.mp4" type="video/mp4">
+  Tu navegador no soporta el elemento de video.
+</video>
