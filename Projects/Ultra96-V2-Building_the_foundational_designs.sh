@@ -24,4 +24,4 @@ balena
 python3 py.y
 
 # Now we will do a tiny modification:
-sed '112 a packagegroup-petalinux-jupyter \ '  -i ~/Avnet_2022_2/petalinux/u96v2_sbc_base_2022_2/roject-spec/meta-avnet/recipes-core/images/petalinux-image-minimal.bbappend
+sed '112 a packagegroup-petalinux-jupyter \' -i ~/Avnet_2022_2/petalinux/u96v2_sbc_base_2022_2/roject-spec/meta-avnet/recipes-core/images/petalinux-image-minimal.bbappend
