@@ -13,4 +13,13 @@ source ~/Xilinx/PetaLinux/2022.2/tool/settings.sh
 cd ~/Avnet_2022_2/petalinux/
 scripts/make_u96v2_sbc_base.sh
 
+# Final SD card image on: ~/Avnet_2022_2/petalinux/projects/u96v2_sbc_base_2022_2/images/linux/rootfs.wic
+
+# Copy image on SD card with BalenaEtcher
 balena
+
+# Once we have power on the Ultra we login as "root" and we will have to configure our Internet connection
+
+# Then we will have to create a python script (you can find it on "Scripts" folder) in the root directory and execute the following:
+python3 py.y
+
