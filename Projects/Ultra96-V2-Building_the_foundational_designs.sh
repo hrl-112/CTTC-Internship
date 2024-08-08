@@ -23,3 +23,5 @@ balena
 # Then we will have to create a python script (you can find it on "Scripts" folder) in the root directory and execute the following:
 python3 py.y
 
+# Now we will do a tiny modification:
+sed 112 ' ~/Avnet_2022_2/petalinux/u96v2_sbc_base_2022_2/roject-spec/meta-avnet/recipes-core/images/petalinux-image-minimal.bbappend
