@@ -1,6 +1,21 @@
 # CTTC-Internship
-This repository will contain all the stuff that has been done during the stay in CTTC from the 3rd of July to the 16th of August 
+This repository will contain all the stuff that has been done during the stay in CTTC from the 3rd of July to the 16th of August.
+There are different folders you will find in this repository:
 
+## Docs
+Here is where 
+
+# Miscellaneous
+In this section 
+
+## Pictures-Videos
+In this simple folder is stored all the pictures/videos that were taken/recorded during the stay. We can find from photographs of the materials used or the distribution of them to start working to outputs of the different projects or scripts
+
+## Projects
+
+## Scripts
+
+Considering all the abeforementioned, you will find all the materials necessary in order to replicate all what has been done 
 
 ## Hardware used
 
