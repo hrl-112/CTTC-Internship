@@ -9,5 +9,5 @@
 <img src="Ultra96V2-Setup.jpg" width="650" height="650">
 
 ## Using the USB camera from Python
-### This will be the output of following the steps of the [Ultra96-V2-Building_the_foundational_designs](Projects/Ultra96-V2-Building_the_foundational_designs)
+### This will be the output of following the steps of the [Ultra96-V2-Building_the_foundational_designs](Projects/Ultra96-V2-Building_the_foundational_designs.sh)
 <img src="Camera_Python.png" width="650" height="650">
