@@ -10,4 +10,13 @@
 ### This will be the output of following the steps of the [Ultra96-V2-Building_the_foundational_designs](../Projects/Ultra96-V2-Building_the_foundational_designs.sh)
 <img src="Camera_Python.png" width="650" height="650">
 
-## P
+### Due to the defective WiFi of the Ultra96-V2 we also used the KV260 for some applications
+
+## Facial recognition with KV260 
+### This is one of the outputs of an application using KV260 which you can replicate following the steps showed at [Creating_a_Custom_Kria_App](../Projects/Creating_a_Custom_Kria_App.sh)
+<img src="Face_recognition_Kria.jpg" width="650" height="650">
+
+## Body recognition with minicamera KV260 
+### Another application which not only can distinguish people but also vehicles
+<img src="Body_recognition_Kria.jpg" width="650" height="650">
+
