@@ -14,7 +14,7 @@
 
 ## Facial recognition with KV260 
 ### This is one of the outputs of an application using KV260 which you can replicate following the steps showed at [Creating_a_Custom_Kria_App](../Projects/Creating_a_Custom_Kria_App.sh)
-<img src="Facial_recognition_Kria.jpg" width="650" height="650">
+<img src="Facial_recognition_Kria.jpg">
 
 ## Body recognition with minicamera KV260 
 ### Another application which not only can distinguish people but also vehicles
