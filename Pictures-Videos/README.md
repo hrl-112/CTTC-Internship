@@ -14,6 +14,11 @@
 ## Using the USB camera from Python
 <img src="Camera_Python.png">
 
+## Once we have warmed up, we move on to the next step and we use the DPU of the Ultra96-V2: 
+### This will be the output of following the proyect [Ultra96-V2-Adding_support_for_Vitis-AI_3.0](Ultra96-V2-Adding_support_for_Vitis-AI_3.0]
+<img src="Facial_recognition_Ultra.png">
+
+
 ## Due to the defective WiFi of the Ultra96-V2 we also used the KV260 for some applications:
 ## Facial recognition with KV260 
 ### This is one of the outputs of an application using KV260 which you can replicate following the steps showed at [Creating_a_Custom_Kria_App](../Projects/Creating_a_Custom_Kria_App.sh)
