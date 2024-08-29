@@ -169,19 +169,19 @@ sh build.sh
 
 # We copy the models that we have on ~/Documentos/Hector/models/
 # Execute from host:
-HOST> scp -r ~/Documentos/Hector/models/face_mask_detection_pt root@10.1.2.198:/usr/share/vitis_ai_library/models
+scp -r ~/Documentos/Hector/models/face_mask_detection_pt root@10.1.2.198:/usr/share/vitis_ai_library/models
 
 cd Vitis-AI/examples/vai_library/samples/yolov4
- ./test_jpeg_yolov4 face_mask_detection_pt sample_face_mask.jpg
+./test_jpeg_yolov4 face_mask_detection_pt sample_face_mask.jpg
 
-# Salida comando
-WARNING: Logging before InitGoogleLogging() is written to STDERR
-F0802 10:56:03.555461  1420 demo.hpp:1186] Check failed: !images[index].empty() cannot read image from sample_face_mask.jpgles/yolov4#
-*** Check failure stack trace: ***
-Aborted
+# Output command:
+# WARNING: Logging before InitGoogleLogging() is written to STDERR
+# F0802 10:56:03.555461  1420 demo.hpp:1186] Check failed: !images[index].empty() cannot read image from sample_face_mask.jpgles/yolov4#
+# *** Check failure stack trace: ***
+# Aborted
 
 # Copiamos imagen desde el host descargada de AMD link XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-HOST> scp -r ~/Documentos/Hector/sample_face_mask.jpg root@10.1.2.198:/home/root/Vitis-AI/examples/vai_library/samples/yolov4
+scp -r ~/Documentos/Hector/sample_face_mask.jpg root@10.1.2.198:/home/root/Vitis-AI/examples/vai_library/samples/yolov4
 
 # Salida comando
 WARNING: Logging before InitGoogleLogging() is written to STDERR
@@ -204,6 +204,7 @@ F0802 11:03:58.494525  1450 dpu_control_xrt_edge.cpp:191] dpu timeout! core_idx 
 Aborted
 
 
+# FAST WAY:
 # Ejecutar en la ULTRA96V2
 touch ~/.Xauthority
 
