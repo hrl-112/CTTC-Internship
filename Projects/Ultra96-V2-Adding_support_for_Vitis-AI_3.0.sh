@@ -180,83 +180,46 @@ cd Vitis-AI/examples/vai_library/samples/yolov4
 # *** Check failure stack trace: ***
 # Aborted
 
-# Copiamos imagen desde el host descargada de AMD link XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+# We copy and example image from AMD from the host to the board
 scp -r ~/Documentos/Hector/sample_face_mask.jpg root@10.1.2.198:/home/root/Vitis-AI/examples/vai_library/samples/yolov4
 
-# Salida comando
-WARNING: Logging before InitGoogleLogging() is written to STDERR
-I0802 11:01:50.582168  1430 demo.hpp:1193] batch: 0     image: sample_face_mask.jpg
-I0802 11:01:50.582520  1430 process_result.hpp:44] RESULT: 0	353.533	122.676	583.533	436.967	0.914165
+# Output command
+# WARNING: Logging before InitGoogleLogging() is written to STDERR
+# I0802 11:01:50.582168  1430 demo.hpp:1193] batch: 0     image: sample_face_mask.jpg
+# I0802 11:01:50.582520  1430 process_result.hpp:44] RESULT: 0	353.533	122.676	583.533	436.967	0.914165
 
-# Probamos la cámara USB
+# We give it a try to the USB camera
 cd Vitis-AI/examples/vai_library/samples/yolov4
 ./test_video_yolov4 face_mask_detection_pt 0
 
-# Salida comando
-[ WARN:0] global /usr/src/debug/opencv/4.5.2-r0/git/modules/videoio/src/cap_gstreamer.cpp (1081) open OpenCV | GStreamer warning: Cannot query video position: status=0, value=-1, duration=-1
-WARNING: Logging before InitGoogleLogging() is written to STDERR
-I0802 11:03:48.466337  1438 demo.hpp:752] DPU model size=512x512
-W0802 11:03:58.494212  1450 xrt_cu.cpp:212] cu timeout! device_core_idx 0  handle=0xaaaaeea57460 ENV_PARAM(XLNX_DPU_TIMEOUT) 10000 state 1 ERT_CMD_STATE_COMPLETED 4 ms 10010  bo=1 is_done 0 
-I0802 11:03:58.494403  1450 xrt_cu.cpp:112] Total: 10010898us	ToDriver: 18446737326431555us	ToCU: 0us	Complete: 0us	Done: 6757288894us
-F0802 11:03:58.494525  1450 dpu_control_xrt_edge.cpp:191] dpu timeout! core_idx = 0
- LSTART 0  LEND 0  CSTART 0  CEND 0  SSTART 0  SEND 0  MSTART 0  MEND 0  CYCLE_L 2002181266  CYCLE_H 0 
-*** Check failure stack trace: ***
-Aborted
+# Output command
+# [ WARN:0] global /usr/src/debug/opencv/4.5.2-r0/git/modules/videoio/src/cap_gstreamer.cpp (1081) open OpenCV | GStreamer warning: Cannot query video position: status=0, value=-1, duration=-1
+# WARNING: Logging before InitGoogleLogging() is written to STDERR
+# I0802 11:03:48.466337  1438 demo.hpp:752] DPU model size=512x512
+# W0802 11:03:58.494212  1450 xrt_cu.cpp:212] cu timeout! device_core_idx 0  handle=0xaaaaeea57460 ENV_PARAM(XLNX_DPU_TIMEOUT) 10000 state 1 ERT_CMD_STATE_COMPLETED 4 ms 10010  bo=1 is_done 0 
+# I0802 11:03:58.494403  1450 xrt_cu.cpp:112] Total: 10010898us	ToDriver: 18446737326431555us	ToCU: 0us	Complete: 0us	Done: 6757288894us
+# F0802 11:03:58.494525  1450 dpu_control_xrt_edge.cpp:191] dpu timeout! core_idx = 0
+# LSTART 0  LEND 0  CSTART 0  CEND 0  SSTART 0  SEND 0  MSTART 0  MEND 0  CYCLE_L 2002181266  CYCLE_H 0 
+# *** Check failure stack trace: ***
+# Aborted
+
+# IMPORTANT: Following the steps from the author we did not manage to obtain the final result due to several errores that were worked on but still did not work.
+# All the previous steps commented were some of the tries out 
 
 
 # FAST WAY:
-# Ejecutar en la ULTRA96V2
-touch ~/.Xauthority
+# Copy the image 'avnet-u96v2_sbc-v2022.2-2023-05-10.img' on the SD card
 
-# Ejecutar en el host
-ssh -Y root@10.1.2.198
-
-# Una vez conectada la placa ejecuta lo siguiente
-root@u96v2-sbc-2022-2:
-
-cd Vitis-AI/examples/vai_library/samples/yolov4
-./test_video_yolov4 face_mask_detection_pt 0
-
-
-
-
-
-
-# Iniciar SD Card en Ultra96V2 y ejecutar
-
-cd Vitis-AI/examples/vai_library/samples/yolov4
-./test_video_yolov4 face_mask_detection_pt 0
-
-# Salida del comando anterior
-[ WARN:0] global /usr/src/debug/opencv/4.5.2-r0/git/modules/videoio/src/cap_gstreamer.cpp (1081) open OpenCV | GStreamer warning: Cannot query video position: status=0, value=-1, duration=-1
-WARNING: Logging before InitGoogleLogging() is written to STDERR
-I0731 06:04:12.194324   761 demo.hpp:752] DPU model size=512x512
-terminate called after throwing an instance of 'cv::Exception'
-  what():  OpenCV(4.5.2) /usr/src/debug/opencv/4.5.2-r0/git/modules/highgui/src/window_gtk.cpp:624: error: (-2:Unspecified error) Can't initialize GTK backend in function 'cvInitSystem'
-
-Aborted
-
-
-# IMAGEN CON EL MODELO B2304!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-#avnet-u96v2_sbc-v2022.2-2023-05-10.img
-
-# Copiar la carpeta 'models' dedes el host a la Ultra96V2
+# Copy the folder 'models' from host to Ultra96V2
 scp -r ~/Documentos/Hector/models root@10.1.2.198:/usr/share/vitis_ai_library/
-
-
-
-
-
 
 # Execute on ULTRA96V2
 touch ~/.Xauthority
 
-# Ejecutar en el host
+# Execute on host
 ssh -Y root@10.1.2.198
 
-# Una vez conectada la placa ejecuta lo siguiente
-root@u96v2-sbc-2022-2:
-
+# Once connected the board execute the following
 cd Vitis-AI/examples/vai_library/samples/yolov4
 ./test_video_yolov4 face_mask_detection_pt 0
 
@@ -267,6 +230,6 @@ cd Vitis-AI/examples/vai_library/samples/yolov4
 # terminate called after throwing an instance of 'cv::Exception'
 #  what():  OpenCV(4.5.2) /usr/src/debug/opencv/4.5.2-r0/git/modules/highgui/src/window_gtk.cpp:624: error: (-2:Unspecified error) Can't initialize GTK backend in function 'cvInitSystem'
 
-# The output of the detection is shown on the host monitor
+# The output of the detection will be shown on the host monitor
 
 
