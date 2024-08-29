@@ -25,8 +25,8 @@ cp ../../../avnet-vitis-platforms/u96v2/overlays/examples/benchmark/binary_conta
 cp ../../../avnet-vitis-platforms/u96v2/overlays/examples/benchmark/binary_container_1/sd_card/dpu.xclbin firmware/avnet_u96v2_benchmark/avnet_u96v2_benchmark.xclbin
 echo '{ "shell_type":"XRT_FLAT", "num_slots":1 }' > firmware/avnet_u96v2_benchmark/shell.json 
 
-# File modified (you will need to download the .dtsi file or copy the content on another file)(CAUTION: Your path is going to be different, you need to change it. 
-# The first patch is what you need to change) 
+# File modified (you will need to download the .dtsi file or copy the content shown on the respective project from Mario Bergeron in another file)(CAUTION: Your path is going to be different, you need to change it. 
+# The first path is what you need to change) 
 cp -f ~/Documents/Hector/avnet_u96v2_benchmark.dtsi firmware/avnet_u96v2_benchmark/avnet_u96v2_benchmark.dtsi
 
 # Change to directory projects petalinux 'u96v2_sbc_base_2022_2'
@@ -43,7 +43,6 @@ petalinux-create -t apps \
                   --force
                   
 # This will have created new entries in the user-rootfsconfig and rootfs_config configuration files. Add the "vitis-ai-library-*" packages to these, as follows:
-
 file_conf=~/Avnet_2022_2/petalinux/projects/u96v2_sbc_base_2022_2/project-spec/meta-user/conf/user-rootfsconfig
 
 echo 'CONFIG_xmutil' >> $file_conf
@@ -51,19 +50,19 @@ echo 'CONFIG_xmutil' >> $file_conf
 # echo 'CONFIG_vitis-ai-library-dev' >> $file_conf
 # echo 'CONFIG_vitis-ai-library-dbg' >> $file_conf
 
-# Actualizar fichero 'rootfs_config'
-
+# Upload file 'rootfs_config':
 file_conf=~/Avnet_2022_2/petalinux/projects/u96v2_sbc_base_2022_2/project-spec/configs/rootfs_config
 
-
 echo 'CONFIG_xmutil=y' >> $file_conf
+echo 'CONFIG_imagefeature-package-management=y' >> $file_conf
+echo 'CONFIG_dnf=y' >> $file_conf
 # echo 'CONFIG_vitis-ai-library=y' >> $file_conf
 # echo 'CONFIG_vitis-ai-library-dev=y' >> $file_conf
 
-# Actualizamos fichero 'interfaces' para configurar eth0
-cp -f ~/Documentos/Hector/interfaces ~/Avnet_2022_2/petalinux/projects/u96v2_sbc_base_2022_2/project-spec/configs/init-ifupdown/interfaces
+# Modify file Kconfig.syshw
+# sed '337 a config SUBSYSTEM_ETHERNET_PSU_ETHERNET_3_SELECT\n\tbool "psu_ethernet_3"'         -i ~/Avnet_2022_2/petalinux/projects/u96v2_sbc_base_2022_2/build/misc/config/Kconfig.syshw
+# sed '344 a config SUBSYSTEM_ETHERNET_PSU_ETHERNET_3_MAC_PATTERN\n\tstring "Template for randomised MAC address"\n\tdefault "00:0a:35:00:??:??"\n\tdepends on SUBSYSTEM_ETHERNET_PSU_ETHERNET_3_SELECT && SUBSYSTEM_ETHERNET_PSU_ETHERNET_3_MAC_AUTO\n\thelp\n\t  Pattern for generating random MAC addresses - question mark\n\t  characters will be replaced by random hex digits\n\nconfig SUBSYSTEM_ETHERNET_PSU_ETHERNET_3_MAC\n\tstring "Ethernet MAC address"\n\tdefault "00:0a:35:00:22:01"\n\tdepends on SUBSYSTEM_ETHERNET_PSU_ETHERNET_3_SELECT && !SUBSYSTEM_ETHERNET_PSU_ETHERNET_3_MAC_AUTO\n\thelp\n\t  To read MAC from ROM/EEPROM set this value to ff:ff:ff:ff:ff:ff\n\nconfig SUBSYSTEM_ETHERNET_PSU_ETHERNET_3_USE_DHCP\n\tbool "Obtain IP address automatically"\n\tdefault y\n\tdepends on SUBSYSTEM_ETHERNET_PSU_ETHERNET_3_SELECT\n\thelp\n\t  Set this option if you would like your SUBSYSTEM to use DHCP for\n\t  obtaining an IP address.\n\nconfig SUBSYSTEM_ETHERNET_PSU_ETHERNET_3_IP_ADDRESS\n\tstring "Static IP address"\n\tdefault "192.168.0.10"\n\tdepends on SUBSYSTEM_ETHERNET_PSU_ETHERNET_3_SELECT && !SUBSYSTEM_ETHERNET_PSU_ETHERNET_3_USE_DHCP\n\thelp\n\t  The IP address of your main network interface when static network\n\t  address assignment is used.\n\nconfig SUBSYSTEM_ETHERNET_PSU_ETHERNET_3_IP_NETMASK\n\tstring "Static IP netmask"\n\tdefault "255.255.255.0"\n\tdepends on SUBSYSTEM_ETHERNET_PSU_ETHERNET_3_SELECT && !SUBSYSTEM_ETHERNET_PSU_ETHERNET_3_USE_DHCP\n\thelp\n\t  Default netmask when static network address assignment is used.\n\nconfig SUBSYSTEM_ETHERNET_PSU_ETHERNET_3_IP_GATEWAY\n\tstring "Static IP gateway"\n\tdefault "192.168.0.1"\n\tdepends on SUBSYSTEM_ETHERNET_PSU_ETHERNET_3_SELECT && !SUBSYSTEM_ETHERNET_PSU_ETHERNET_3_USE_DHCP\n\thelp\n\t  Default gateway when static network address assignment is used.' -i ~/Avnet_2022_2/petalinux/projects/u96v2_sbc_base_2022_2/build/misc/config/Kconfig.syshw
 
-# NO CLONAMOS VITIS_AI, ON TARGET INSTALAREMOS EL PACKAGE
 # We start by cloning the Vitis-AI 3.0 repository:
 # cd ~/Avnet_2022_2
 # git clone -b 3.0 https://github.com/Xilinx/Vitis-AI.git
@@ -75,102 +74,101 @@ cp -f ~/Documentos/Hector/interfaces ~/Avnet_2022_2/petalinux/projects/u96v2_sbc
 # For our Vitis implementation, we need to remove one file, the vart_3.0_vivado.bb recipe.
 # rm project-spec/meta-user/recipes-vitis-ai/vart/vart_3.0_vivado.bb
 
+# We create a packagegroup
+cd ~/Avnet_2022_2/petalinux/projects/u96v2_sbc_base_2022_2/
+mkdir -p project-spec/meta-user/recipes-core/packagegroups
+
+echo '
+DESCRIPTION = "ULTRA96V2 ML inference app related packages"
+
+inherit packagegroup
+
+ULTRA96V2_ML_ACCEL_PACKAGES = " \
+      ap1302-ar1335-single-firmware \
+      dnf \
+      e2fsprogs-resize2fs \
+      parted \
+      resize-part \
+      packagegroup-petalinux-vitisai \
+      packagegroup-petalinux-vitisai-dev \
+      packagegroup-petalinux-gstreamer \      
+      cmake \
+      libgcc \
+      gcc-symlinks \
+      g++-symlinks \
+      binutils \
+      xrt \
+      xrt-dev \
+      zocl \
+      opencl-clhpp-dev \
+      opencl-headers-dev \
+      packagegroup-petalinux-opencv \
+      packagegroup-petalinux-opencv-dev \
+      packagegroup-petalinux-v4lutils  \
+      "
+RDEPENDS_${PN} = "${ULTRA96V2_ML_ACCEL_PACKAGES}"
+
+' > project-spec/meta-user/recipes-core/packagegroups/packagegroup-ultra96v2-ml-accel.bb
+
+
+# Add the custom packagegroup to the root file system configuration
+echo "CONFIG_packagegroup-ultra96v2-ml-accel" >> project-spec/meta-user/conf/user-rootfsconfig
+echo "CONFIG_packagegroup-ultra96v2-ml-accel=y" >> project-spec/configs/rootfs_config
+
 # We can now rebuild the petalinux project:
 petalinux-build -x mrproper
 petalinux-build
 
-# Copiar con BalenaEtcher en SD Card ~/Avnet_2022_2/petalinux/projects/u96v2_sbc_base_2022_2/images/linux/rootfs.wic
+# Copy with BalenaEtcher on SD Card ~/Avnet_2022_2/petalinux/projects/u96v2_sbc_base_2022_2/images/linux/rootfs.wic
 
-
-
-
-
-# Iniciamos la ultra
-
-# Probamos aplicaión facedetect
+# Initialize ultra
+# We try out the application facedetect
 cd Vitis-AI/examples/vai_library/samples/yolov4
 
 ./test_video_yolov4 face_mask_detection_pt 0
 
-# Salida aplicación
-[  393.255613] xhci-hcd xhci-hcd.1.auto: ERROR Transfer event TRB DMA ptr not part of current TD ep_index 2 comp_code 1
-[ WARN:0] global /usr/src/debug/opencv/4.5.2-r0/git/modules/videoio/src/cap_gstreamer.cpp (1081) open OpenCV | GStreamer warning: Cannot query video position: status=0, value=-1, duration=-1
-WARNING: Logging before InitGoogleLogging() is written to STDERR
-I0805 07:30:48.212615  1009 demo.hpp:752] DPU model size=512x512
-terminate called after throwing an instance of 'cv::Exception'
-  what():  OpenCV(4.5.2) /usr/src/debug/opencv/4.5.2-r0/git/modules/highgui/src/window_gtk.cpp:624: error: (-2:Unspecified error) Can't initialize GTK backend in function 'cvInitSystem'
-
-Aborted
-
+# Output:
+# [  393.255613] xhci-hcd xhci-hcd.1.auto: ERROR Transfer event TRB DMA ptr not part of current TD ep_index 2 comp_code 1
+# [ WARN:0] global /usr/src/debug/opencv/4.5.2-r0/git/modules/videoio/src/cap_gstreamer.cpp (1081) open OpenCV | GStreamer warning: Cannot query video position: status=0, value=-1, duration=-1
+# WARNING: Logging before InitGoogleLogging() is written to STDERR
+# I0805 07:30:48.212615  1009 demo.hpp:752] DPU model size=512x512
+# terminate called after throwing an instance of 'cv::Exception'
+#   what():  OpenCV(4.5.2) /usr/src/debug/opencv/4.5.2-r0/git/modules/highgui/src/window_gtk.cpp:624: error: (-2:Unspecified error) Can't initialize GTK backend in function 'cvInitSystem'
+# Aborted
 
 
-# Ejecutar en la ULTRA96V2
+# Execute on ULTRA96V2
 touch ~/.Xauthority
 
-# Ejecutar en el host
+# Execute on host
 ssh -Y root@10.1.2.198
 
-# Una vez conectada la placa ejecuta lo siguiente
-root@u96v2-sbc-2022-2:
-
+# Once the board is connected, execute:
 cd Vitis-AI/examples/vai_library/samples/yolov4
 ./test_video_yolov4 face_mask_detection_pt 0
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 xmutil loadapp avnet-u96v2-benchmark
 echo 'firmware: /lib/firmware/xilinx/avnet-u96v2-benchmark/avnet-u96v2-benchmark.xclbin' > /etc/vart.conf
 
 
-# DENTRO DE LA ULTRA
-
+# On the ULTRA:
 git clone -b 3.0 https://github.com/Xilinx/Vitis-AI.git
-
 cd Vitis-AI/examples/vai_library/samples/yolov4
-
-
-
 sh build.sh 
+./test_jpeg_yolov4 face_mask_detection_pt sample_face_mask.jpg
 
-# control + z por si se queda colgado 
+# Result test without models
+# WARNING: Logging before InitGoogleLogging() is written to STDERR
+# F0802 09:46:41.164902  1188 configurable_dpu_task_imp.cpp:108] [UNILOG][FATAL][VAILIB_DPU_TASK_NOT_FIND][Model files not find!] cannot find model <face_mask_detection_pt> after checking following dir:
+# 	.
+# 	.
+# 	/usr/share/vitis_ai_library/models
+# 	/usr/share/vitis_ai_library/.models
+# *** Check failure stack trace: ***
+# Aborted
 
- ./test_jpeg_yolov4 face_mask_detection_pt sample_face_mask.jpg
-
-# RESUTADO TEST SIN MODELOS
-
- ./test_jpeg_yolov4 face_mask_detection_pt sample_face_mask.jpg 
-WARNING: Logging before InitGoogleLogging() is written to STDERR
-F0802 09:46:41.164902  1188 configurable_dpu_task_imp.cpp:108] [UNILOG][FATAL][VAILIB_DPU_TASK_NOT_FIND][Model files not find!] cannot find model <face_mask_detection_pt> after checking following dir:
-	.
-	.
-	/usr/share/vitis_ai_library/models
-	/usr/share/vitis_ai_library/.models
-*** Check failure stack trace: ***
-Aborted
-
-# Copiamos el modelo que tenemos en ~/Documentos/Hector/models/
+# We copy the models that we have on ~/Documentos/Hector/models/
+# Execute from host:
 HOST> scp -r ~/Documentos/Hector/models/face_mask_detection_pt root@10.1.2.198:/usr/share/vitis_ai_library/models
 
 cd Vitis-AI/examples/vai_library/samples/yolov4
@@ -218,52 +216,6 @@ root@u96v2-sbc-2022-2:
 cd Vitis-AI/examples/vai_library/samples/yolov4
 ./test_video_yolov4 face_mask_detection_pt 0
 
-# Salida del comando
-[ WARN:0] global /usr/src/debug/opencv/4.5.2-r0/git/modules/videoio/src/cap_gstreamer.cpp (1081) open OpenCV | GStreamer warning: Cannot query video position: status=0, value=-1, duration=-1
-XRT build version: 2.14.0
-Build hash: 43926231f7183688add2dccfd391b36a1f000bea
-Build date: 2022-10-07 05:12:02
-Git branch: 2022.2
-PID: 1467
-UID: 0
-[Fri Aug  2 11:06:06 2024 GMT]
-HOST: 
-EXE: /home/root/Vitis-AI/examples/vai_library/samples/yolov4/test_video_yolov4
-[XRT] ERROR: unable to issue xclExecBuf
-WARNING: Logging before InitGoogleLogging() is written to STDERR
-F0802 11:06:06.442256  1467 xrt_bin_stream.cpp:159] [UNILOG][FATAL][VART_LOAD_XCLBIN_FAIL][Bitstream download failed!] 
-*** Check failure stack trace: ***
-Aborted
-
-
-xmutil listapps
-                     Accelerator          Accel_type                            Base           Base_type      #slots(PL+AIE)         Active_slot
-
-           avnet-u96v2-benchmark            XRT_FLAT           avnet-u96v2-benchmark            XRT_FLAT               (0+0)                  -1
-
-xmutil loadapp avnet-u96v2-benchmark
-avnet-u96v2-benchmark: load Error: -1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -295,7 +247,7 @@ scp -r ~/Documentos/Hector/models root@10.1.2.198:/usr/share/vitis_ai_library/
 
 
 
-# Ejecutar en la ULTRA96V2
+# Execute on ULTRA96V2
 touch ~/.Xauthority
 
 # Ejecutar en el host
@@ -307,31 +259,13 @@ root@u96v2-sbc-2022-2:
 cd Vitis-AI/examples/vai_library/samples/yolov4
 ./test_video_yolov4 face_mask_detection_pt 0
 
-# Salida del comando anterior
-[ WARN:0] global /usr/src/debug/opencv/4.5.2-r0/git/modules/videoio/src/cap_gstreamer.cpp (1081) open OpenCV | GStreamer warning: Cannot query video position: status=0, value=-1, duration=-1
-WARNING: Logging before InitGoogleLogging() is written to STDERR
-I0731 06:04:12.194324   761 demo.hpp:752] DPU model size=512x512
-terminate called after throwing an instance of 'cv::Exception'
-  what():  OpenCV(4.5.2) /usr/src/debug/opencv/4.5.2-r0/git/modules/highgui/src/window_gtk.cpp:624: error: (-2:Unspecified error) Can't initialize GTK backend in function 'cvInitSystem'
+# Output command:
+# [ WARN:0] global /usr/src/debug/opencv/4.5.2-r0/git/modules/videoio/src/cap_gstreamer.cpp (1081) open OpenCV | GStreamer warning: Cannot query video position: status=0, value=-1, duration=-1
+# WARNING: Logging before InitGoogleLogging() is written to STDERR
+# I0731 06:04:12.194324   761 demo.hpp:752] DPU model size=512x512
+# terminate called after throwing an instance of 'cv::Exception'
+#  what():  OpenCV(4.5.2) /usr/src/debug/opencv/4.5.2-r0/git/modules/highgui/src/window_gtk.cpp:624: error: (-2:Unspecified error) Can't initialize GTK backend in function 'cvInitSystem'
 
-Aborted
-
-
-# La salida de la detección se muestra en el monitor del host
+# The output of the detection is shown on the host monitor
 
 
-#CONTENIDO DE LA CARPETA /usr/share/vitis_ai_library/models/face_mask_detection_pt:
-drwxr-xr-x   2 root root    4096 May 10  2023 .
-drwxr-xr-x 145 root root   12288 May 10  2023 ..
--rw-r--r--   1 root root     559 May 10  2023 face_mask_detection_pt.prototxt
--rw-r--r--   1 root root 1357572 May 10  2023 face_mask_detection_pt.xmodel
--rw-r--r--   1 root root      33 May 10  2023 md5sum.txt
--rw-r--r--   1 root root     264 May 10  2023 meta.json
-
-
-"lib": "libvart-dpu-runner.so",
-    "filename": "face_mask_detection_pt.xmodel",
-    "kernel": [
-        "subgraph_Darknet__Darknet_FeatureConcat_module_list__ModuleList_118__Cat_cat__input_228"
-    ],
-    "target": "DPUCZDX8G_ISA1_B2304_0101000016010405
