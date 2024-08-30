@@ -210,9 +210,6 @@ cd Vitis-AI/examples/vai_library/samples/yolov4
 # FAST WAY:
 # Copy the image 'avnet-u96v2_sbc-v2022.2-2023-05-10.img' on the SD card
 
-# Copy the folder 'models' from host to Ultra96V2
-scp -r ~/Documentos/Hector/models root@10.1.2.198:/usr/share/vitis_ai_library/
-
 # Execute on ULTRA96V2
 touch ~/.Xauthority
 
