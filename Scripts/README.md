@@ -118,11 +118,10 @@
 
 
 ## Open a serial port
-| Command                                  | Description                                                                                                                                                                           |
-| ---                                      | ---                                                                                                                                                                                   |
-|`sudo dmesg`                              | We visualize all the devices that are available. Even though is a log file, this command is required to be executed before using the gtkterm to work properly. This seems to be a bug | 
-|`sudo gtkterm -p /dev/ttyUSB1 -s 115200 &`| Then we open the serial port taking into consideration the number of ttyUSBx that we have seen doing the dmesg                                                                        |
-
+| Command                              | Description                                                                                                    |
+| ---                                  | ---                                                                                                            |
+|`sudo su`                             | We give root privileges in order to execute gtkerm                                                             | 
+|`gtkterm -p /dev/ttyUSB1 -s 115200 &` | Then we open the serial port taking into consideration the number of ttyUSBx that we have seen doing the dmesg |    
 
 
 
