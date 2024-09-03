@@ -5,7 +5,7 @@ There are different folders you will find in this repository:
 ## Docs
 Here is where the document required from university can be found
 
-# Miscellaneous
+## Miscellaneous
 In this section, as the name indicates, some scripts, files or useful information are uploaded
 
 ## Pictures-Videos
