@@ -3,19 +3,19 @@ This repository will contain all the stuff that has been done during the stay in
 There are different folders you will find in this repository:
 
 ## Docs
-Here is where 
+Here is where the document required from university can be found
 
 # Miscellaneous
-In this section 
+In this section, as the name indicates, some scripts, files or useful information are uploaded
 
 ## Pictures-Videos
 In this simple folder is stored all the pictures/videos that were taken/recorded during the stay. We can find from photographs of the materials used or the distribution of them to start working to outputs of the different projects or scripts
 
 ## Projects
+Inside this part there are the .sh made in order to replicate the projects done during the internship
 
 ## Scripts
-
-Considering all the abeforementioned, you will find all the materials necessary in order to replicate all what has been done 
+Considering all the abeforementioned, you will find all the materials necessary in order to replicate all what has been done in the Projects section
 
 ## Hardware used
 
