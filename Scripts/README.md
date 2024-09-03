@@ -67,3 +67,15 @@
 |`echo '    netmask 255.255.255.0' >> /etc/network/interfaces` | Introduce the netmask to which we want to connect                                                   |
 |`echo '    gateway 10.1.2.1' >> /etc/network/interfaces`      | Introduce the gateway to which we want to connect                                                   |
 |`sudo /etc/init.d/networking restart`                         | Finally we do a restart to apply the changes                                                        |
+
+## Download and open BalenaEtcher from terminal
+|          Command                                                                                         | Description                                         | 
+|            ---                                                                                           | ---                                                 |
+| `~Downloads`                                                                                             | We go to Downloads in order to install BalenaEtcher |
+| `wget https://github.com/balena-io/etcher/releases/download/v1.19.21/balenaEtcher-linux-x64-1.19.21.zip` | Download the .zip file                              |
+| `unzip balenaEtcher-linux-x64-1.19.21.zip`                                                               | Unzip the file                                      |
+| `echo '~/Downloads/balenaEtcher-linux-x64-1.19.21/balenaEtcher-linux-x64/balena-etcher &' > ~/balena.sh` | Create a script to launch Balena                    | 
+| `chmod +x ~/balena.sh`                                                                                   | Make the file created an executable                 |
+| `export PATH=$PATH:~/`                                                                                   | Add home folder to PATH                             |
+| `ln -s ~/balena.sh balena`                                                                               | Create a simbolic link called *balena*              |
+| `balena`                                                                                                 | Open Balena from terminal                           |
