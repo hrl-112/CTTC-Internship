@@ -15,7 +15,7 @@ In this simple folder is stored all the pictures/videos that were taken/recorded
 Inside this part there are the .sh made in order to replicate the projects done during the internship
 
 ## Scripts
-Considering all the abeforementioned, you will find all the materials necessary in order to replicate all what has been done in the [Projects](../Projects) section
+Considering all the abeforementioned, you will find all the materials necessary in order to replicate all what has been done in the [Projects](Projects) section
 
 ## Hardware used
 
